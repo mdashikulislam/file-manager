@@ -69,7 +69,7 @@ body {
 .brand { display: flex; align-items: center; gap: 14px; }
 .brand-logo {
   width: 42px; height: 42px;
-  display: grid; place-items: center;
+  display: grid; align-items: center; justify-content: center; place-items: center;
   border-radius: 12px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: white;
@@ -114,7 +114,7 @@ body {
 }
 .dropzone::before {
   content: '';
-  position: absolute; inset: 0;
+  position: absolute; top: 0; right: 0; bottom: 0; left: 0;
   background: radial-gradient(600px 200px at 50% 0%, rgba(124,92,255,.18), transparent 70%);
   pointer-events: none;
   opacity: 0;
@@ -126,11 +126,11 @@ body {
   background: rgba(124,92,255,.09);
 }
 .dropzone.drag::before { opacity: 1; }
-.dropzone-inner { position: relative; z-index: 1; display: grid; place-items: center; gap: 8px; }
+.dropzone-inner { position: relative; z-index: 1; display: grid; align-items: center; justify-content: center; place-items: center; gap: 8px; }
 .dz-icon {
   width: 68px; height: 68px;
   border-radius: 20px;
-  display: grid; place-items: center;
+  display: grid; align-items: center; justify-content: center; place-items: center;
   background: linear-gradient(135deg, rgba(124,92,255,.25), rgba(34,211,238,.2));
   color: #cfd0ff;
   border: 1px solid rgba(255,255,255,.08);
@@ -176,7 +176,7 @@ body {
   position: relative;
 }
 .upload-item .u-fill {
-  position: absolute; inset: 0; width: 0%;
+  position: absolute; top: 0; right: 0; bottom: 0; left: 0; width: 0%;
   background: linear-gradient(90deg, var(--accent), var(--accent-2));
   border-radius: 999px;
   transition: width .15s linear;
@@ -209,7 +209,7 @@ body {
   appearance: none; border: 0; background: rgba(255,255,255,.06);
   color: var(--text-dim); cursor: pointer;
   width: 22px; height: 22px; border-radius: 50%;
-  display: grid; place-items: center; font-size: 14px; line-height: 1;
+  display: grid; align-items: center; justify-content: center; place-items: center; font-size: 14px; line-height: 1;
 }
 .clear-btn:hover { background: rgba(255,255,255,.12); color: var(--text); }
 
@@ -258,7 +258,7 @@ body {
 .file-icon {
   width: 46px; height: 46px;
   border-radius: 12px;
-  display: grid; place-items: center;
+  display: grid; align-items: center; justify-content: center; place-items: center;
   color: white;
   font-weight: 700;
   font-size: 11px;
@@ -299,7 +299,7 @@ body {
 .icon-btn {
   appearance: none;
   width: 36px; height: 36px;
-  display: grid; place-items: center;
+  display: grid; align-items: center; justify-content: center; place-items: center;
   border-radius: 10px;
   border: 1px solid var(--border);
   background: rgba(255,255,255,.03);
@@ -321,7 +321,7 @@ body {
 }
 .empty h3 { margin: 8px 0 4px; font-size: 18px; }
 .empty p { margin: 0; color: var(--text-dim); font-size: 14px; }
-.empty-illustration { display: grid; place-items: center; margin-bottom: 6px; }
+.empty-illustration { display: grid; align-items: center; justify-content: center; place-items: center; margin-bottom: 6px; }
 
 /* Toasts */
 .toast-stack {
@@ -331,6 +331,7 @@ body {
   display: grid;
   gap: 10px;
   z-index: 20;
+  max-width: 360px;
   max-width: min(360px, calc(100vw - 44px));
 }
 .toast {
@@ -354,14 +355,16 @@ body {
 /* Modal */
 [hidden] { display: none !important; }
 .modal {
-  position: fixed; inset: 0;
+  position: fixed; top: 0; right: 0; bottom: 0; left: 0;
   background: rgba(6, 6, 12, 0.65);
   backdrop-filter: blur(8px);
-  display: grid; place-items: center;
+  display: grid; align-items: center; justify-content: center; place-items: center;
   z-index: 30;
   animation: fadeIn .2s var(--ease);
 }
 .modal-card {
+  width: 90%;
+  max-width: 420px;
   width: min(420px, calc(100vw - 40px));
   padding: 22px;
   border-radius: var(--radius);
@@ -407,4 +410,23 @@ body {
 /* Prefer-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+/* Old-engine fallbacks (flex gap unsupported before Chrome 84 / Android WebView 84) */
+@supports not (gap: 1px) {
+  .brand > * + * { margin-left: 14px; }
+  .stats > * + * { margin-left: 10px; }
+  .toolbar > * + * { margin-left: 10px; }
+  .search > * + * { margin-left: 10px; }
+  .file-sub > * + * { margin-left: 8px; }
+  .file-actions > * + * { margin-left: 6px; }
+  .toast > * + * { margin-left: 10px; }
+  .modal-actions > * + * { margin-left: 10px; }
+  .ghost-btn > svg, .danger-btn > svg { margin-right: 8px; }
+  .upload-list > * + * { margin-top: 10px; }
+  .toast-stack > * + * { margin-top: 10px; }
+  .files > * { margin-bottom: 12px; }
+  @media (max-width: 640px) {
+    .toolbar > * + * { margin-left: 0; margin-top: 10px; }
+  }
 }

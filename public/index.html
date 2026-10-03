@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=2" />
   <link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='14' fill='%237c5cff'/><path d='M18 22h12l4 4h12v18H18z' fill='white' opacity='.95'/></svg>" />
 </head>
 <body>
@@ -101,6 +101,18 @@
     </div>
   </div>
 
-  <script src="app.js"></script>
+  <script>
+    // Surface script failures on old browsers instead of a silent empty page.
+    window.onerror = function (msg) {
+      try {
+        if (window.__toast) { window.__toast('Script error: ' + msg, 'error', 8000); return; }
+        var b = document.createElement('div');
+        b.setAttribute('style', 'position:fixed;left:0;right:0;bottom:0;z-index:99;padding:12px 16px;background:#b91c1c;color:#fff;font:13px sans-serif');
+        b.textContent = 'This browser could not run the app: ' + msg;
+        document.body.appendChild(b);
+      } catch (_) {}
+    };
+  </script>
+  <script src="app.js?v=2"></script>
 </body>
 </html>
